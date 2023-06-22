@@ -1,19 +1,24 @@
 @extends('layouts.app')
-
-@section('title', config('app.name'))
-@section('titleHeader', config('app.name'))
-
+@section('title', trans('lang.text_title_welcome'))
+@section('titleHeader', trans('lang.text_title_welcome'))
 @section('content')
-<div class="row mt-5">
-    <div class="col-md-6 offset-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title text-center pt-4 pb-4">Bienvenue dans la base de données des étudiants du Collège Maisonneuve</h3>
-                <div class="text-center">
-                    <a href="{{ route('etudiants.index')}}" class="btn btn-primary btn-sm">Afficher la liste des étudiants</a>
-                </div>
+
+        <style>
+            .btn-custom {
+                background-color: navy;
+                color: white;
+                border: navy;
+            }
+            .btn-custom.btn-primary:hover {
+                background-color: #40B1C0; /* Cor de fundo do btn-primary */
+                color: white;
+                border: white;
+            }
+        </style>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3 class="pt-4 pb-4">@lang('lang.text_welcome')</h3>
+                <a href="{{ route('forum.index')}}" class="btn btn-custom btn-primary btn-lg">Afficher la liste des articles</a>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+@endsection  

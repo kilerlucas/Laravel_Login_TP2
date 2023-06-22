@@ -1,55 +1,86 @@
-
-
 @extends('layouts.app')
-
-@section('title', 'Détails de l\'étudiant')
-@section('titleHeader', 'Détails de l\'étudiant')
-
+@section('title', 'Liste des étudiants')
+@section('titleHeader', 'Étudiants')
 @section('content')
-<div class="row mt-5">
-    <div class="col-md-6 offset-md-3">
-    <a href="{{route('etudiants.index')}}" class="btn btn-outline-primary btn-sm">Retourner</a>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ $etudiants->nom }}</h5>
-                <p class="card-text"><strong>Adresse :</strong> {{ $etudiants->adresse }}</p>
-                <p class="card-text"><strong>Ville :</strong> {{ $etudiants->etudiantHasVille->nom }}</p>
-                <p class="card-text"><strong>Téléphone :</strong> {{ $etudiants->phone }}</p>
-                <p class="card-text"><strong>E-mail :</strong> {{ $etudiants->email }}</p>
-                <p class="card-text"><strong>Date de naissance :</strong> {{ $etudiants->date_de_naissance }}</p>
-                <a href="{{ route('etudiants.edit', $etudiants->id) }}" class="btn btn-outline-primary">Modifier</a>
-                <form action="{{ route('etudiants.destroy', $etudiants->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
-                        Supprimer
-                    </button>
-                </form>
+        <style>
+            .btn-custom {
+                background-color: navy;
+                color: white;
+                border: navy;
+            }
+            .btn-custom.btn-primary:hover {
+                background-color: #40B1C0; /* Cor de fundo do btn-primary */
+                color: white;
+                border: white;
+            }
+            .btn-custom-modifier.btn-primary:hover {
+                background-color: navy; /* Cor de fundo do btn-primary */
+                color: white;
+                border: white;
+            }
+            .btn-custom-danger.btn-primary:hover {
+                background-color: black; /* Cor de fundo do btn-primary */
+                color: white;
+                border: white;
+            }
+            .btn-custom-modifier {
+                background-color: #40B1C0;
+                color: white;
+                border: white;
+            }
+            .btn-custom-danger {
+                background-color: red;
+                color: white;
+                border: red;
+            }
+        </style>
+        <div class="row mt-5">
+            <div class="col-12">
+                <a href="{{route('etudiants.index')}}" class="btn btn-custom btn-primary btn-sm">Retourner</a>
+                <div class="card p-4 mt-4 mb-4 bg-light">
+                  <h4 class='display-8 mt-3 pb-3' >
+                      {{$etudiants->name}}
+                  </h4>
+                  <p><strong>Adresse :</strong> {{ $etudiants->adresse }}</p> 
+                  <p><strong>Ville :</strong> {{ $etudiants->etudiantHasVille->nom }}</p>  
+                  <p><strong>Phone :</strong> {{ $etudiants->phone }}</p>  
+                  <p><strong>E-mail :</strong> {{ $etudiants->email }}</p>  
+                  <p><strong>Date de naissance :</strong> {{ $etudiants->date_de_naissance }}</p>   
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-6">
+                <a href="{{route('etudiants.edit', $etudiants->id)}}" class="btn btn-custom-modifier btn-primary">Modifier</a>
+            </div>
+            <div class="col-6">
+                
+                <button type="button" class="btn btn-custom-danger btn-primary" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                    Effacer
+                </button>
+            </div>
+        </div>
 
 <!-- Modal -->
 <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Voulez-vous vraiment supprimer les données de {{$etudiants->nom}} ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <form method="post" action="{{route('etudiants.destroy', $etudiants->id)}}">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                </form>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Voulez vous vraimente effacer la donnee : {{ $etudiants->name }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form method="post">
+        @csrf
+        @method('delete')
+        <input type="submit" value="Effacer" class="btn btn-danger">
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 @endsection

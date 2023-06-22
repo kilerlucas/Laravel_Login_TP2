@@ -1,60 +1,62 @@
 @extends('layouts.app')
-
 @section('title', 'Modifier un étudiant')
-
+@section('titleHeader', 'Modifier un étudiant')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <style>
+            .btn-custom {
+                background-color: navy;
+                color: white;
+                border: navy;
+            }
+            .btn-custom.btn-primary:hover {
+                background-color: #40B1C0; /* Cor de fundo do btn-primary */
+                color: white;
+                border: white;
+            }
+    </style>
+    <div class="row mt-4 justify-content-center">
+        <div class="col-6">
             <div class="card">
-                <div class="card-header bg-primary text-white">Formulaire de modification</div>
+                <form method="post">
+                    @csrf
+                    @method('put')
+                    <div class="card-header">
+                        <h5>Modifier les données de l'étudiant</h5>
+                    </div>
+                    <div class="card-body">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" 
+                        class="form-control" value="{{$etudiant->name}}">
 
-                <div class="card-body">
-                    <form method="post">
-                        @csrf
-                        @method('put')
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse" 
+                        class="form-control" value="{{$etudiant->adresse}}">
 
-                        <div class="form-group">
-                            <label for="nom">Nom</label>
-                            <input type="text" id="nom" name="nom" class="form-control" value="{{$etudiant->nom}}">
-                        </div>
+                        <label for="ville">Ville</label>
+                        <select name="ville_id" id="ville" class="form-control">
+                            @foreach($villes as $ville)
+                            <option value="{{ $ville->id }}"  {{ $ville->id == $etudiant->ville_id ? 'selected' : '' }}>{{ $ville->nom }}</option>
+                            @endforeach
+                        </select>
 
-                        <div class="form-group">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" id="adresse" name="adresse" class="form-control" value="{{$etudiant->adresse}}">
-                        </div>
+                        <label for="phone">Phone</label>
+                        <input type="text" id="phone" name="phone" 
+                        class="form-control" value="{{$etudiant->phone}}">
 
-                        <div class="form-group">
-                            <label for="ville">Ville</label>
-                            <select name="ville_id" id="ville" class="form-control">
-                                @foreach($villes as $ville)
-                                <option value="{{ $ville->id }}" {{ $ville->id == $etudiant->ville_id ? 'selected' : '' }}>{{ $ville->nom }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label for="email">Email</label>
+                        <input type="text" id="email" name="email" 
+                        class="form-control" value="{{$etudiant->email}}">
 
-                        <div class="form-group">
-                            <label for="phone">Téléphone</label>
-                            <input type="text" id="phone" name="phone" class="form-control" value="{{$etudiant->phone}}">
-                        </div>
+                        <label for="date-de-naissance">Date de naissance</label>
+                        <input type="date" id="date-de-naissance" name="date-de-naissance" 
+                        class="form-control" value="{{$etudiant->date_de_naissance}}">
 
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="text" id="email" name="email" class="form-control" value="{{$etudiant->email}}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date-de-naissance">Date de naissance</label>
-                            <input type="date" id="date-de-naissance" name="date_de_naissance" class="form-control" value="{{$etudiant->date_de_naissance}}">
-                        </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Enregistrer</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <input type="submit" class="btn btn-custom btn-primary" value="Save">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
 @endsection
